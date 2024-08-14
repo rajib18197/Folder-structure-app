@@ -63,14 +63,3 @@ export class Tree {
     return null;
   }
 }
-
-const data = [
-  ["DSA", "Linked List", "Doubly LL", "Reverse-A-Doubly-LL.js"],
-  ["DSA", "Linked List", "Circular LL", "Detect-and-Remove-a-Loop.js"],
-  ["DSA", "Stack", "Design-A-Stack-with-Queue.js"],
-];
-
-export const tree = new Tree(data);
-console.log(tree.root);
-
-export const root = tree.root;

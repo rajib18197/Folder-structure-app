@@ -1,10 +1,10 @@
 import Editors from "./Editors";
-import Folders from "./Folders";
+import Explorer from "./features/Explorer/Explorer";
 
 export default function AppLayout() {
   return (
     <div className="app">
-      <Folders />
+      <Explorer />
       <Editors />
     </div>
   );
