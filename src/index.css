@@ -18,7 +18,7 @@ body {
 
 .app {
   display: grid;
-  grid-template-columns: 30rem 1fr;
+  grid-template-columns: 35rem 1fr;
   height: 100vh;
 }
 
@@ -35,12 +35,24 @@ body {
 .folders__title {
   font-size: 1.5rem;
   text-transform: uppercase;
+  padding: 1rem;
+  border: 1px solid #254866;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 1;
 }
 
 .folders__header {
   font-size: 1.6rem;
   display: flex;
-  gap: 0.6rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+}
+
+.folders__main {
+  padding: 0.6rem 1rem;
 }
 
 .parent {

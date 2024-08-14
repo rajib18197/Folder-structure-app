@@ -1,11 +1,11 @@
 import { useState } from "react";
 
 export default function ExplorerNameInput() {
-  const [windowName, setWindowName] = useState("");
-  const [editWindowName, setEditWindowName] = useState(true);
+  const [windowName, setWindowName] = useState("Project");
+  const [editWindowName, setEditWindowName] = useState(false);
 
   return (
-    <div>
+    <div className="explorerName">
       {editWindowName && (
         <input
           type="text"

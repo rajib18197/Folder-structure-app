@@ -43,40 +43,44 @@ export default function Explorer() {
 
   return (
     <div className="folders">
-      <h4 className="folders__title">Explorer</h4>
+      <h4 className="folders__title">
+        Explorer <span>...</span>
+      </h4>
       <header className="folders__header">
         <ExplorerNameInput />
-        <button
-          onClick={() => {
-            setFolderInput((folder) => ({
-              ...folder,
-              showInput: false,
-              folderName: "",
-            }));
-            setFileInput((file) => ({ ...file, showInput: !file.showInput }));
-          }}
-        >
-          <ion-icon name="document-outline"></ion-icon>
-          File
-        </button>
+        <div>
+          <button
+            onClick={() => {
+              setFolderInput((folder) => ({
+                ...folder,
+                showInput: false,
+                folderName: "",
+              }));
+              setFileInput((file) => ({ ...file, showInput: !file.showInput }));
+            }}
+          >
+            <ion-icon name="document-outline"></ion-icon>
+            File
+          </button>
 
-        <button
-          onClick={() => {
-            setFileInput((file) => ({
-              ...file,
-              showInput: false,
-              fileName: "",
-            }));
+          <button
+            onClick={() => {
+              setFileInput((file) => ({
+                ...file,
+                showInput: false,
+                fileName: "",
+              }));
 
-            setFolderInput((folder) => ({
-              ...folder,
-              showInput: !folder.showInput,
-            }));
-          }}
-        >
-          <ion-icon name="folder-outline"></ion-icon>
-          Folder
-        </button>
+              setFolderInput((folder) => ({
+                ...folder,
+                showInput: !folder.showInput,
+              }));
+            }}
+          >
+            <ion-icon name="folder-outline"></ion-icon>
+            Folder
+          </button>
+        </div>
       </header>
 
       <main className="folders__main">
