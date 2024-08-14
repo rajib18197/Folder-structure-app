@@ -5,15 +5,26 @@ export default function Folders() {
   const [data, setData] = useState([root]);
   const [windowName, setWindowName] = useState("");
   const [editWindowName, setEditWindowName] = useState(true);
+
   const [fileInput, setFileInput] = useState({
     showInput: false,
     fileName: "",
+  });
+
+  const [folderInput, setFolderInput] = useState({
+    showInput: false,
+    folderName: "",
   });
 
   function handleNewFileCreationClick() {
     const newTree = new Tree([[fileInput.fileName]]);
     console.log(newTree.root);
 
+    setData((data) => [...data, newTree.root]);
+  }
+
+  function handleNewFolderCreationClick() {
+    const newTree = new Tree([[folderInput.folderName]]);
     setData((data) => [...data, newTree.root]);
   }
 
@@ -37,14 +48,33 @@ export default function Folders() {
           )}
         </div>
         <button
-          onClick={() =>
-            setFileInput((file) => ({ ...file, showInput: !file.showInput }))
-          }
+          onClick={() => {
+            setFolderInput((folder) => ({
+              ...folder,
+              showInput: false,
+              folderName: "",
+            }));
+            setFileInput((file) => ({ ...file, showInput: !file.showInput }));
+          }}
         >
           <ion-icon name="document-outline"></ion-icon>
           File
         </button>
-        <button>
+
+        <button
+          onClick={() => {
+            setFileInput((file) => ({
+              ...file,
+              showInput: false,
+              fileName: "",
+            }));
+
+            setFolderInput((folder) => ({
+              ...folder,
+              showInput: !folder.showInput,
+            }));
+          }}
+        >
           <ion-icon name="folder-outline"></ion-icon> Folder
         </button>
       </header>
@@ -60,6 +90,20 @@ export default function Folders() {
             }
           />
         )}
+
+        {folderInput.showInput && (
+          <input
+            onChange={(e) =>
+              setFolderInput((folder) => ({
+                ...folder,
+                folderName: e.target.value,
+              }))
+            }
+            onKeyDown={(e) =>
+              e.key === "Enter" ? handleNewFolderCreationClick() : ""
+            }
+          />
+        )}
         {data.map((node) => (
           <Folder node={node} key={crypto.randomUUID()} />
         ))}
@@ -69,22 +113,24 @@ export default function Folders() {
 }
 
 function Folder({ node }) {
-  // console.log(node);
-
   const [isOpen, setIsOpen] = useState(node.childrens.length ? true : false);
 
   return (
     <div className="parent">
       <div className="name" onClick={() => setIsOpen((open) => !open)}>
-        {node.childrens.length ? (
-          isOpen ? (
-            <ion-icon name="chevron-down-outline"></ion-icon>
-          ) : (
-            <ion-icon name="chevron-forward-outline"></ion-icon>
-          )
+        {node.name.includes(".") ? (
+          <ion-icon name="document-outline"></ion-icon>
         ) : (
-          <ion-icon name="logo-nodejs"></ion-icon>
+          <>
+            {isOpen ? (
+              <ion-icon name="chevron-down-outline"></ion-icon>
+            ) : (
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            )}
+            <ion-icon name="folder-outline"></ion-icon>
+          </>
         )}
+
         <span>{node.name}</span>
       </div>
 
