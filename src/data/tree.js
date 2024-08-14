@@ -6,14 +6,15 @@ class Node {
   }
 }
 
-class Tree {
+export class Tree {
   root = null;
   constructor(data) {
     this.data = data;
-
-    // for (let i = 0; i < this.data.length; i++) {
-    //   this.createNode(...this.data[i]);
-    // }
+    console.log(this.data);
+    if (!this.data[0][1]) {
+      this.createNode(this.data[0][0]);
+      return;
+    }
 
     for (let i = 0; i < this.data.length; i++) {
       for (let j = 0; j < this.data[i].length - 1; j++) {
@@ -23,6 +24,14 @@ class Tree {
   }
 
   createNode(parentName, childName) {
+    // console.log(childName, this.root);
+
+    if (!childName && !this.root) {
+      this.root = new Node(parentName);
+      // console.log(this.root, 111);
+
+      return;
+    }
     const childNode = new Node(childName);
     const node = this.findNode(this.root, parentName);
     const node2 = this.findNode(this.root, childName);
@@ -55,45 +64,13 @@ class Tree {
   }
 }
 
-// const data = [
-//   ["DSA", "Linked List"],
-//   ["DSA", "Stack"],
-//   ["Stack", "Design A Stack with Queue"],
-//   ["Linked List", "Doubly LL"],
-//   ["Doubly LL", "Reverse A Doubly LL"],
-//   ["Linked List", "Circular LL"],
-//   ["Circular LL", "Detect and Remove a Loop"],
-// ];
-
 const data = [
   ["DSA", "Linked List", "Doubly LL", "Reverse-A-Doubly-LL.js"],
   ["DSA", "Linked List", "Circular LL", "Detect-and-Remove-a-Loop.js"],
   ["DSA", "Stack", "Design-A-Stack-with-Queue.js"],
 ];
 
-// const data1 = [
-//   [
-//     "DSA",
-//     {
-//       "Linked List": [
-//         "Doubly LL",
-//         "Reverse A Doubly LL",
-//         "Circular LL",
-//         "Detect and Remove a Loop",
-//       ],
-//     },
-//   ],
-//   ["DSA", "Stack", "Design A Stack with Queue"],
-// ];
-
-const tree = new Tree(data);
-// tree.createNode("DSA", "Linked List");
-// tree.createNode("DSA", "Stack");
-// tree.createNode("Stack", "Design A Stack with Queue");
-// tree.createNode("Linked List", "Doubly LL");
-// tree.createNode("Doubly LL", "Reverse A Doubly LL");
-// tree.createNode("Linked List", "Circular LL");
-// tree.createNode("Circular LL", "Detect and Remove a Loop");
+export const tree = new Tree(data);
 console.log(tree.root);
 
 export const root = tree.root;
