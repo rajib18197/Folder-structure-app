@@ -1,0 +1,68 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  line-height: 1.4;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 30rem 1fr;
+  height: 100vh;
+}
+
+.folders {
+  background-color: #101d28;
+  color: white;
+}
+
+.editors {
+  background-color: #384f75;
+  color: white;
+}
+
+.folders__title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.folders__header {
+  font-size: 1.6rem;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.parent {
+  font-size: 1.6rem;
+}
+
+.child {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.name {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.open {
+  display: flex;
+}
+
+.close {
+  display: none;
+}
