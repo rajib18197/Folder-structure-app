@@ -8,9 +8,10 @@ class Node {
 
 export class Tree {
   root = null;
+
   constructor(data) {
     this.data = data;
-    console.log(this.data);
+
     if (!this.data[0][1]) {
       this.createNode(this.data[0][0]);
       return;
@@ -24,12 +25,8 @@ export class Tree {
   }
 
   createNode(parentName, childName) {
-    // console.log(childName, this.root);
-
     if (!childName && !this.root) {
       this.root = new Node(parentName);
-      // console.log(this.root, 111);
-
       return;
     }
     const childNode = new Node(childName);

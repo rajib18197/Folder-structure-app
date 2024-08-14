@@ -14,6 +14,7 @@ const initialData = [tree.root];
 
 export default function Explorer() {
   const [data, setData] = useState(initialData);
+  const [isOpen, setIsOpen] = useState(true);
 
   const [fileInput, setFileInput] = useState({
     showInput: false,
@@ -24,6 +25,10 @@ export default function Explorer() {
     showInput: false,
     folderName: "",
   });
+
+  function handleToggleExplorerClick() {
+    setIsOpen((open) => !open);
+  }
 
   function handleNewFileCreationClick() {
     const newTree = new Tree([[fileInput.fileName]]);
@@ -47,8 +52,11 @@ export default function Explorer() {
         Explorer <span>...</span>
       </h4>
       <header className="folders__header">
-        <ExplorerNameInput />
-        <div>
+        <ExplorerNameInput
+          isOpen={isOpen}
+          onToggle={handleToggleExplorerClick}
+        />
+        <div className="btns">
           <button
             onClick={() => {
               setFolderInput((folder) => ({
@@ -60,7 +68,7 @@ export default function Explorer() {
             }}
           >
             <ion-icon name="document-outline"></ion-icon>
-            File
+            File+
           </button>
 
           <button
@@ -78,41 +86,43 @@ export default function Explorer() {
             }}
           >
             <ion-icon name="folder-outline"></ion-icon>
-            Folder
+            Folder+
           </button>
         </div>
       </header>
 
-      <main className="folders__main">
-        {fileInput.showInput && (
-          <input
-            onChange={(e) =>
-              setFileInput((file) => ({ ...file, fileName: e.target.value }))
-            }
-            onKeyDown={(e) =>
-              e.key === "Enter" ? handleNewFileCreationClick() : ""
-            }
-          />
-        )}
+      {isOpen && (
+        <main className="folders__main">
+          {fileInput.showInput && (
+            <input
+              onChange={(e) =>
+                setFileInput((file) => ({ ...file, fileName: e.target.value }))
+              }
+              onKeyDown={(e) =>
+                e.key === "Enter" ? handleNewFileCreationClick() : ""
+              }
+            />
+          )}
 
-        {folderInput.showInput && (
-          <input
-            onChange={(e) =>
-              setFolderInput((folder) => ({
-                ...folder,
-                folderName: e.target.value,
-              }))
-            }
-            onKeyDown={(e) =>
-              e.key === "Enter" ? handleNewFolderCreationClick() : ""
-            }
-          />
-        )}
+          {folderInput.showInput && (
+            <input
+              onChange={(e) =>
+                setFolderInput((folder) => ({
+                  ...folder,
+                  folderName: e.target.value,
+                }))
+              }
+              onKeyDown={(e) =>
+                e.key === "Enter" ? handleNewFolderCreationClick() : ""
+              }
+            />
+          )}
 
-        {data.map((node) => (
-          <FileFolder node={node} key={crypto.randomUUID()} />
-        ))}
-      </main>
+          {data.map((node) => (
+            <FileFolder node={node} key={crypto.randomUUID()} />
+          ))}
+        </main>
+      )}
     </div>
   );
 }

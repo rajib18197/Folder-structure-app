@@ -5,22 +5,26 @@ export default function FileFolder({ node }) {
 
   return (
     <div className="parent">
-      <div className="name" onClick={() => setIsOpen((open) => !open)}>
-        {node.name.includes(".") ? (
+      {node.name.includes(".") ? (
+        <div className="details file-details">
           <ion-icon name="document-outline"></ion-icon>
-        ) : (
-          <>
-            {isOpen ? (
-              <ion-icon name="chevron-down-outline"></ion-icon>
-            ) : (
-              <ion-icon name="chevron-forward-outline"></ion-icon>
-            )}
-            <ion-icon name="folder-outline"></ion-icon>
-          </>
-        )}
+          <span>{node.name}</span>
+        </div>
+      ) : (
+        <div
+          className="details folder-details"
+          onClick={() => setIsOpen((open) => !open)}
+        >
+          {isOpen ? (
+            <ion-icon name="chevron-down-outline"></ion-icon>
+          ) : (
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          )}
+          <ion-icon name="folder-outline"></ion-icon>
 
-        <span>{node.name}</span>
-      </div>
+          <span>{node.name}</span>
+        </div>
+      )}
 
       {node.childrens.length ? (
         <div className={`child ${isOpen ? "open" : "close"}`}>

@@ -1,11 +1,19 @@
 import { useState } from "react";
 
-export default function ExplorerNameInput() {
+export default function ExplorerNameInput({ isOpen, onToggle }) {
   const [windowName, setWindowName] = useState("Project");
   const [editWindowName, setEditWindowName] = useState(false);
 
   return (
     <div className="explorerName">
+      <span onClick={onToggle}>
+        {isOpen ? (
+          <ion-icon name="chevron-down-outline"></ion-icon>
+        ) : (
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        )}
+      </span>
+
       {editWindowName && (
         <input
           type="text"
@@ -14,8 +22,11 @@ export default function ExplorerNameInput() {
           onKeyDown={(e) => (e.key === "Enter" ? setEditWindowName(false) : "")}
         />
       )}
+
       {!editWindowName && (
-        <p onClick={() => setEditWindowName(true)}>{windowName}</p>
+        <p className="explorer-title" onClick={() => setEditWindowName(true)}>
+          {windowName}
+        </p>
       )}
     </div>
   );
