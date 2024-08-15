@@ -48,15 +48,30 @@ export default function Explorer() {
   }
 
   function handleNewFileOnTreeClick(node, fileName) {
-    console.log(data);
-
     const selectedTree = data.find((tree) => {
-      // console.log(tree);
       return tree.findNode(tree.root, node.name);
     });
 
     const parentNode = selectedTree.findNode(selectedTree.root, node.name);
     selectedTree.createNode(parentNode.name, fileName);
+
+    setData((data) =>
+      data.map((tree) => {
+        if (tree.root.name === selectedTree.root.name) {
+          return selectedTree;
+        }
+        return tree;
+      })
+    );
+  }
+
+  function handleNewFolderOnTreeClick(node, folderName) {
+    const selectedTree = data.find((tree) => {
+      return tree.findNode(tree.root, node.name);
+    });
+
+    const parentNode = selectedTree.findNode(selectedTree.root, node.name);
+    selectedTree.createNode(parentNode.name, folderName);
 
     setData((data) =>
       data.map((tree) => {
@@ -144,7 +159,8 @@ export default function Explorer() {
             <FileFolder
               node={tree.root}
               key={crypto.randomUUID()}
-              onSelect={handleNewFileOnTreeClick}
+              onFileSelect={handleNewFileOnTreeClick}
+              onFolderSelect={handleNewFolderOnTreeClick}
             />
           ))}
         </main>

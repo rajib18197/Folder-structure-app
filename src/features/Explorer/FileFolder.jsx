@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function FileFolder({ node, onSelect }) {
+export default function FileFolder({ node, onFileSelect, onFolderSelect }) {
   const [isOpen, setIsOpen] = useState(node.childrens.length ? true : false);
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
 
@@ -21,17 +21,11 @@ export default function FileFolder({ node, onSelect }) {
   }
 
   function handleNewFileCreationClick() {
-    onSelect(node, fileInput.fileName);
+    onFileSelect(node, fileInput.fileName);
   }
 
   function handleNewFolderCreationClick() {
-    const newTree = new Tree([[folderInput.folderName]]);
-    setData((data) => [...data, newTree.root]);
-    setFolderInput((folder) => ({
-      ...folder,
-      showInput: false,
-      folderName: "",
-    }));
+    onFolderSelect(node, folderInput.folderName);
   }
 
   return (
@@ -122,7 +116,12 @@ export default function FileFolder({ node, onSelect }) {
       {node.childrens.length ? (
         <div className={`child ${isOpen ? "open" : "close"}`}>
           {node.childrens.map((child) => (
-            <FileFolder node={child} key={child.id} onSelect={onSelect} />
+            <FileFolder
+              node={child}
+              key={child.id}
+              onFileSelect={onFileSelect}
+              onFolderSelect={onFolderSelect}
+            />
           ))}
         </div>
       ) : null}
