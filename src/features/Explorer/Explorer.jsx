@@ -10,11 +10,12 @@ const data = [
 ];
 
 const tree = new Tree(data);
-const initialData = [tree.root];
+const initialData = [tree];
 
 export default function Explorer() {
   const [data, setData] = useState(initialData);
   const [isOpen, setIsOpen] = useState(true);
+  console.log(data, 111);
 
   const [fileInput, setFileInput] = useState({
     showInput: false,
@@ -32,18 +33,39 @@ export default function Explorer() {
 
   function handleNewFileCreationClick() {
     const newTree = new Tree([[fileInput.fileName]]);
-    setData((data) => [...data, newTree.root]);
+    setData((data) => [...data, newTree]);
     setFileInput((file) => ({ ...file, showInput: false, fileName: "" }));
   }
 
   function handleNewFolderCreationClick() {
     const newTree = new Tree([[folderInput.folderName]]);
-    setData((data) => [...data, newTree.root]);
+    setData((data) => [...data, newTree]);
     setFolderInput((folder) => ({
       ...folder,
       showInput: false,
       folderName: "",
     }));
+  }
+
+  function handleNewFileOnTreeClick(node, fileName) {
+    console.log(data);
+
+    const selectedTree = data.find((tree) => {
+      // console.log(tree);
+      return tree.findNode(tree.root, node.name);
+    });
+
+    const parentNode = selectedTree.findNode(selectedTree.root, node.name);
+    selectedTree.createNode(parentNode.name, fileName);
+
+    setData((data) =>
+      data.map((tree) => {
+        if (tree.root.name === selectedTree.root.name) {
+          return selectedTree;
+        }
+        return tree;
+      })
+    );
   }
 
   return (
@@ -118,8 +140,12 @@ export default function Explorer() {
             />
           )}
 
-          {data.map((node) => (
-            <FileFolder node={node} key={crypto.randomUUID()} />
+          {data.map((tree) => (
+            <FileFolder
+              node={tree.root}
+              key={crypto.randomUUID()}
+              onSelect={handleNewFileOnTreeClick}
+            />
           ))}
         </main>
       )}

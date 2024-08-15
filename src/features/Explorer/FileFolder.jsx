@@ -1,15 +1,39 @@
 import { useState } from "react";
 
-export default function FileFolder({ node }) {
+export default function FileFolder({ node, onSelect }) {
   const [isOpen, setIsOpen] = useState(node.childrens.length ? true : false);
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
+
+  const [fileInput, setFileInput] = useState({
+    showInput: false,
+    fileName: "",
+  });
+
+  const [folderInput, setFolderInput] = useState({
+    showInput: false,
+    folderName: "",
+  });
 
   function handleClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    console.log(e);
     setIsContextMenuOpen(true);
   }
+
+  function handleNewFileCreationClick() {
+    onSelect(node, fileInput.fileName);
+  }
+
+  function handleNewFolderCreationClick() {
+    const newTree = new Tree([[folderInput.folderName]]);
+    setData((data) => [...data, newTree.root]);
+    setFolderInput((folder) => ({
+      ...folder,
+      showInput: false,
+      folderName: "",
+    }));
+  }
+
   return (
     <div className="parent" onContextMenu={handleClick}>
       {isContextMenuOpen && (
@@ -70,10 +94,35 @@ export default function FileFolder({ node }) {
         </div>
       )}
 
+      {fileInput.showInput && (
+        <input
+          onChange={(e) =>
+            setFileInput((file) => ({ ...file, fileName: e.target.value }))
+          }
+          onKeyDown={(e) =>
+            e.key === "Enter" ? handleNewFileCreationClick() : ""
+          }
+        />
+      )}
+
+      {folderInput.showInput && (
+        <input
+          onChange={(e) =>
+            setFolderInput((folder) => ({
+              ...folder,
+              folderName: e.target.value,
+            }))
+          }
+          onKeyDown={(e) =>
+            e.key === "Enter" ? handleNewFolderCreationClick() : ""
+          }
+        />
+      )}
+
       {node.childrens.length ? (
         <div className={`child ${isOpen ? "open" : "close"}`}>
           {node.childrens.map((child) => (
-            <FileFolder node={child} key={child.id} />
+            <FileFolder node={child} key={child.id} onSelect={onSelect} />
           ))}
         </div>
       ) : null}
