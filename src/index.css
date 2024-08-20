@@ -96,12 +96,13 @@ button:hover {
   display: flex;
   align-items: center;
   gap: 1rem;
-  text-transform: uppercase;
-  font-weight: 600;
 }
 
 .explorer-title {
+  text-transform: uppercase;
   font-size: 1.3rem;
+  letter-spacing: 0.75px;
+  color: rgb(89, 126, 228);
 }
 
 .parent {
