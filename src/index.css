@@ -27,17 +27,18 @@ button {
   outline: none;
   border: none;
   color: burlywood;
-  display: flex;
-  padding: 0.4rem;
+  background-color: #100e29;
+  /* display: flex; */
+  padding: 1rem 3rem;
   border-radius: 3px;
-  gap: 0.4rem;
+  /* gap: 0.4rem; */
   transition: all 0.3s;
 }
 
 button:hover {
   background-color: #100e29;
 }
-
+/* 
 .app {
   display: grid;
   grid-template-columns: 35rem 1fr;
@@ -156,4 +157,22 @@ button:hover {
 
 .close {
   display: none;
+} */
+
+.root-partition {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: #100e29;
+}
+
+.sub-partition-root {
+  display: flex;
+  width: 100%;
+}
+
+.partition {
+  color: white;
+  width: 100%;
+  font-size: 1.6rem;
 }
